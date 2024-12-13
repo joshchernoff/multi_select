@@ -17,7 +17,19 @@ defmodule MultiSelectExampleWeb.Router do
   scope "/", MultiSelectExampleWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/things", ThingLive.Index, :index
+    live "/things/new", ThingLive.Index, :new
+    live "/things/:id/edit", ThingLive.Index, :edit
+
+    live "/things/:id", ThingLive.Show, :show
+    live "/things/:id/show/edit", ThingLive.Show, :edit
+
+    live "/", ExampleLive.Index, :index
+    live "/new", ExampleLive.Index, :new
+    live "/:id/edit", ExampleLive.Index, :edit
+
+    live "/:id", ExampleLive.Show, :show
+    live "/:id/show/edit", ExampleLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

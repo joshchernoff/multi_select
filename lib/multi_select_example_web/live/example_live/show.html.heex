@@ -1,0 +1,31 @@
+<.header>
+  Example {@example.id}
+  <:subtitle>This is a example record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"//#{@example}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit example</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Thing">{@example.thing.title}</:item>
+</.list>
+
+<.back navigate={~p"/"}>Back to examples</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="example-modal"
+  show
+  on_cancel={JS.patch(~p"//#{@example}")}
+>
+  <.live_component
+    module={MultiSelectExampleWeb.ExampleLive.FormComponent}
+    id={@example.id}
+    title={@page_title}
+    action={@live_action}
+    example={@example}
+    patch={~p"//#{@example}"}
+  />
+</.modal>

@@ -1,0 +1,41 @@
+<.header>
+  Listing Things
+  <:actions>
+    <.link patch={~p"/things/new"}>
+      <.button>New Thing</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="things"
+  rows={@streams.things}
+  row_click={fn {_id, thing} -> JS.navigate(~p"/things/#{thing}") end}
+>
+  <:col :let={{_id, thing}} label="Title">{thing.title}</:col>
+  <:action :let={{_id, thing}}>
+    <div class="sr-only">
+      <.link navigate={~p"/things/#{thing}"}>Show</.link>
+    </div>
+    <.link patch={~p"/things/#{thing}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, thing}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: thing.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="thing-modal" show on_cancel={JS.patch(~p"/things")}>
+  <.live_component
+    module={MultiSelectExampleWeb.ThingLive.FormComponent}
+    id={@thing.id || :new}
+    title={@page_title}
+    action={@live_action}
+    thing={@thing}
+    patch={~p"/things"}
+  />
+</.modal>
