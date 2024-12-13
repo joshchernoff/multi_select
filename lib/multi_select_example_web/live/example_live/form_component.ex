@@ -19,11 +19,10 @@ defmodule MultiSelectExampleWeb.ExampleLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input
+        <MultiSelectExampleWeb.SelectComponents.select
           field={@form[:thing_id]}
-          type="select"
-          label="thing"
-          placeholder="select thing"
+          id="select_component"
+          label="Custom Select"
           options={
             MultiSelectExample.Things.list_things()
             |> Enum.map(fn thing -> {thing.title, thing.id} end)
