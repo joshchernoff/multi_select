@@ -37,7 +37,6 @@ defmodule MultiSelectExampleWeb.SelectComponents do
         <ul
           id={"#{@id}_menu"}
           class="hidden absolute z-10 mt-2 max-h-32 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-2xl ring-1 ring-black/5 focus:outline-none sm:text-sm"
-          tabindex="-1"
           role="listbox"
           aria-labelledby={"#{@id}-label"}
         >
@@ -48,7 +47,7 @@ defmodule MultiSelectExampleWeb.SelectComponents do
               |> Phoenix.LiveView.JS.dispatch("hidden:dispatch", to: "##{@id}-hidden")
             }
             class={[
-              "relative flex gap-x-2 items-center cursor-pointer select-none py-2 pl-3",
+              "relative flex gap-x-2 items-center cursor-pointer select-none py-2 pl-3 hover:bg-gray-100 hover:text-indigo-600",
               @field.value == value &&
                 "bg-gray-100 text-indigo-600 border border-l-4 border-t-0 border-b-0 border-r-0 border-indigo-600"
             ]}
