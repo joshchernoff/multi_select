@@ -12,7 +12,7 @@
   rows={@streams.examples}
   row_click={fn {_id, example} -> JS.navigate(~p"/#{example}") end}
 >
-  <:col :let={{_id, example}} label="Thing">{example.thing.title}</:col>
+  <:col :let={{_id, example}} label="Thing">{example.thing && example.thing.title}</:col>
 
   <:action :let={{_id, example}}>
     <div class="sr-only">

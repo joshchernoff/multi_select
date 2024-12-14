@@ -23,6 +23,8 @@ defmodule MultiSelectExampleWeb.ExampleLive.FormComponent do
           field={@form[:thing_id]}
           id="select_component"
           label="Custom Select"
+          placeholder="Please Select Thing"
+          myself={@myself}
           options={
             MultiSelectExample.Things.list_things()
             |> Enum.map(fn thing -> {thing.title, thing.id} end)
@@ -51,6 +53,19 @@ defmodule MultiSelectExampleWeb.ExampleLive.FormComponent do
   def handle_event("validate", %{"example" => example_params}, socket) do
     changeset = Examples.change_example(socket.assigns.example, example_params)
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
+  end
+
+  def handle_event("select-item", %{"id" => id, "selected" => value, "key" => "Enter"}, socket) do
+    {:noreply,
+     socket
+     |> push_event("hidden:dispatch", %{
+       to: "#{id}-hidden",
+       attr: value
+     })}
+  end
+
+  def handle_event("select-item", _, socket) do
+    {:noreply, socket}
   end
 
   def handle_event("save", %{"example" => example_params}, socket) do

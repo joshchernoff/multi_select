@@ -47,3 +47,10 @@ window.liveSocket = liveSocket;
 window.addEventListener("hidden:dispatch", (detail) =>
   detail.target.dispatchEvent(new Event("input", { bubbles: true }))
 );
+window.addEventListener("hidden:dispatch", (detail) => console.log(detail));
+
+window.addEventListener("phx:hidden:dispatch", function ({ detail }) {
+  elm = document.getElementById(detail.to);
+  elm.value = detail.attr;
+  elm.dispatchEvent(new Event("input", { bubbles: true }));
+});
